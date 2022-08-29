@@ -5,29 +5,29 @@ namespace BugTracker.Models
     public class Project
     {
         //Primary Key
-        int Id { get; set; }
+        public int Id { get; set; }
 
         //Foreign Key
-        int CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         [Required]
-        string? Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
-        string? Description { get; set; }
+        public string? Description { get; set; }
 
-        DateTime? Created { get; set; }
-        DateTime StartDate { get; set; }
-        DateTime? EndDate   { get; set; }
+        public DateTime? Created { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate   { get; set; }
 
-        int ProjectPriorityId { get; set; }
+        public int ProjectPriorityId { get; set; }
 
-        IFormFile? ImageFormFile { get; set; }
+        public IFormFile? ImageFormFile { get; set; }
 
-        string? ImageFileName { get; set; }
-        string? ImageFileType { get; set; }
+        public string? ImageFileName { get; set; }
+        public string? ImageFileType { get; set; }
 
-        bool Archived { get; set; }
+        public bool Archived { get; set; }
 
         //Navigation Properties
         public virtual Company? Company { get; set; }

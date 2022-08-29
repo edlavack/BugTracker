@@ -5,29 +5,29 @@ namespace BugTracker.Models
     public class Notification
     {
         //Primary Key
-        int Id { get; set; }
+        public int Id { get; set; }
 
         //Foreign Key(s)
-        int ProjectId { get; set; } 
-        int TicketId { get; set; }
+        public int ProjectId { get; set; }
+        public int TicketId { get; set; }
 
         [Required]
-        string? SenderId { get; set; }
+        public string? SenderId { get; set; }
 
         [Required]
-        string? RecipientId  { get; set; }
+        public string? RecipientId  { get; set; }
 
         //
 
         [Required]
-        public string? Title { get; set; }
+         public string? Title { get; set; }
 
         [Required]
-        string? Message { get; set; }
+        public string? Message { get; set; }
 
-        DateTime Created { get; set; }
-        int NotificationTypeId  { get; set; }
-        bool HasBeenViewed { get; set; }
+        public DateTime Created { get; set; }
+        public int NotificationTypeId  { get; set; }
+        public bool HasBeenViewed { get; set; }
 
         //Navigation Properties 
         public virtual NotificationType? NotificationType { get; set; }

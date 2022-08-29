@@ -4,20 +4,20 @@ namespace BugTracker.Models
 {
     public class TicketAttachment
     {
-        int Id { get; set; }
-        string? Description { get; set; }
+        public int Id { get; set; }
+        public string? Description { get; set; }
 
-        DateTime? Created { get; set; }
+        public DateTime? Created { get; set; }
 
         //Foreign Key
-        int TicketId { get; set; }
+        public int TicketId { get; set; }
 
         [Required]
-        string? UserId { get; set; }
+        public string? UserId { get; set; }
 
-        IFormFile? FormFile { get; set; }
-        byte[]? FileData { get; set; }
-        string? FileType { get; set; }
+        public IFormFile? FormFile { get; set; }
+        public byte[]? FileData { get; set; }
+        public string? FileType { get; set; }
 
         //Navigation Properties 
         public virtual Ticket? Ticket { get; set; }

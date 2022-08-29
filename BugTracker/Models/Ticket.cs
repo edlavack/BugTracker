@@ -8,26 +8,26 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
-        string Title { get; set; }
+        public string Title { get; set; }
 
         [Required]
-        string Description { get; set; }
+        public string Description { get; set; }
 
-        DateTime Created { get; set; }
-        DateTime Updated { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
 
-        bool Archived { get; set; }
-        bool ArchivedByProject { get; set; }
+        public bool Archived { get; set; }
+        public bool ArchivedByProject { get; set; }
 
         //Foreign Key
-        int ProjectId { get; set; }
-        int TicketTypeId { get; set; }
-        int TicketStatusId { get; set; }
-        int TicketPriorityId { get; set; }
-        string? DeveloperUserId { get; set; }
+        public int ProjectId { get; set; }
+        public int TicketTypeId { get; set; }
+        public int TicketStatusId { get; set; }
+        public int TicketPriorityId { get; set; }
+        public string? DeveloperUserId { get; set; }
 
         [Required]
-        string? SubmitterUserId { get; set; }
+        public string? SubmitterUserId { get; set; }
         //
 
         //Navigation Properties 

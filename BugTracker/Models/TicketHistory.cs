@@ -5,21 +5,21 @@ namespace BugTracker.Models
     public class TicketHistory
     {
         public int Id { get; set; }
-        
+
         //Foreign Keys
-        int TicketId { get; set; }
-           
+        public int TicketId { get; set; }
 
-        string? PropertyName { get; set; }
-        string? Description { get; set; }
 
-        DateTime Created { get; set; }
+        public string? PropertyName { get; set; }
+        public string? Description { get; set; }
 
-        string? OldValue { get; set; }
-        string? NewValue { get; set; }
+        public DateTime Created { get; set; }
+
+        public string? OldValue { get; set; }
+        public string? NewValue { get; set; }
 
         [Required]
-        string? UserId { get; set; }
+        public string? UserId { get; set; }
 
         //Navigation Properties 
         public virtual Ticket? Ticket { get; set; }

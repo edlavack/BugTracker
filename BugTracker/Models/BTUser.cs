@@ -18,12 +18,12 @@ namespace BugTracker.Models
         [NotMapped]
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
 
-         IFormFile?  ImageFormFile { get; set; } 
-        string? ImageFileName { get; set; }
-        string? ImageFileType { get; set; }
+        public IFormFile?  ImageFormFile { get; set; }
+        public string? ImageFileName { get; set; }
+        public string? ImageFileType { get; set; }
 
         //Foreign Key
-        int CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         //Navigation Properties 
         public virtual Company? Company { get; set; }

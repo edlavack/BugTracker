@@ -5,14 +5,15 @@ namespace BugTracker.Models
     public class Company
     {
         //Foreign Key
-        int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        string? Name { get; set; }
-        string? Description { get; set; }
-        IFormFile? ImageFormFile { get; set; }
-        string? ImageFileName { get; set; }
-        string? ImageFileType { get; set; }
+        public string? Name { get; set; }
+
+        public string? Description { get; set; }
+        public IFormFile? ImageFormFile { get; set; }
+        public string? ImageFileName { get; set; }
+        public string? ImageFileType { get; set; }
 
         //Navigation Properties 
         public virtual ICollection<Project>? Projects { get; set; }

@@ -7,13 +7,13 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
-        string? Comment { get; set; }
+        public string? Comment { get; set; }
 
-        DateTime Created { get; set; }
+        public DateTime Created { get; set; }
 
         //Foreign Keys
-        int TicketId { get; set; }
-        string? UserId { get; set; }
+        public int TicketId { get; set; }
+        public string? UserId { get; set; }
 
         //Navigation Properties
         public virtual Ticket? Ticket { get; set; }
