@@ -9,11 +9,11 @@ namespace BugTracker.Models
 
         public DateTime? Created { get; set; }
 
-        //Foreign Key
+        //Foreign Keys
         public int TicketId { get; set; }
-
         [Required]
         public string? UserId { get; set; }
+
 
         public IFormFile? FormFile { get; set; }
         public byte[]? FileData { get; set; }

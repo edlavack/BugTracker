@@ -7,13 +7,16 @@ namespace BugTracker.Models
         //Primary Key
         public int Id { get; set; }
         public DateTime InviteDate { get; set; }
-        public DateTime JoinDate { get; set; }
+        public DateTime? JoinDate { get; set; }
         public Guid CompanyToken { get; set; }
+
         //Foreign Key(s)
         [Required]
        public string? InvitorId { get; set; }
-
+       public int CompanyId { get; set; }
+       public int ProjectId { get; set; }
        public string? InviteeId { get; set; }
+        //
 
         [Required]
         public string? InviteeEmail { get; set; }

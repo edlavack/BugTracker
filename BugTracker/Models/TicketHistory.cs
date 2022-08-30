@@ -18,6 +18,7 @@ namespace BugTracker.Models
         public string? OldValue { get; set; }
         public string? NewValue { get; set; }
 
+
         [Required]
         public string? UserId { get; set; }
 

@@ -9,6 +9,7 @@ namespace BugTracker.Models
 
         //Foreign Key
         public int CompanyId { get; set; }
+        //
 
         [Required]
         public string? Name { get; set; }

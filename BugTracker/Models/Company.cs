@@ -4,7 +4,7 @@ namespace BugTracker.Models
 {
     public class Company
     {
-        //Foreign Key
+        //Primary Key
         public int Id { get; set; }
 
         [Required]

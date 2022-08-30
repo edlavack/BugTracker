@@ -14,21 +14,20 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime? Updated { get; set; }
 
         public bool Archived { get; set; }
         public bool ArchivedByProject { get; set; }
 
-        //Foreign Key
+        //Foreign Keys
         public int ProjectId { get; set; }
         public int TicketTypeId { get; set; }
         public int TicketStatusId { get; set; }
         public int TicketPriorityId { get; set; }
         public string? DeveloperUserId { get; set; }
-
         [Required]
         public string? SubmitterUserId { get; set; }
-        //
+      
 
         //Navigation Properties 
         public virtual Project? Project { get; set; }
@@ -37,7 +36,10 @@ namespace BugTracker.Models
         public virtual TicketStatus? TicketStatus { get; set; }
         public virtual BTUser? DeveloperUser { get; set; }
         public virtual BTUser? SubmitterUser { get; set; }
+        public virtual ICollection<BTUser>? Comments{ get; set; }
+        public virtual ICollection<BTUser>? Attachments{ get; set; }
         public virtual BTUser? History { get; set; }
+
 
 
 

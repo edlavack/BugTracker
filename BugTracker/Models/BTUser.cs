@@ -27,7 +27,7 @@ namespace BugTracker.Models
 
         //Navigation Properties 
         public virtual Company? Company { get; set; }
-        public virtual Project? Projects { get; set; }
+        public virtual ICollection<BTUser>? Projects{ get; set; }
 
 
     }
