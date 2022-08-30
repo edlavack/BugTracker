@@ -27,7 +27,7 @@ namespace BugTracker.Models
         public string? DeveloperUserId { get; set; }
         [Required]
         public string? SubmitterUserId { get; set; }
-      
+
 
         //Navigation Properties 
         public virtual Project? Project { get; set; }
@@ -36,8 +36,8 @@ namespace BugTracker.Models
         public virtual TicketStatus? TicketStatus { get; set; }
         public virtual BTUser? DeveloperUser { get; set; }
         public virtual BTUser? SubmitterUser { get; set; }
-        public virtual ICollection<BTUser>? Comments{ get; set; }
-        public virtual ICollection<BTUser>? Attachments{ get; set; }
+        public virtual ICollection<BTUser>? Comments { get; set; } = new HashSet<BTUser>();
+        public virtual ICollection<BTUser>? Attachments { get; set; } = new HashSet<BTUser>();
         public virtual BTUser? History { get; set; }
 
 

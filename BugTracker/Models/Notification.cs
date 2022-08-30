@@ -15,18 +15,18 @@ namespace BugTracker.Models
         public string? SenderId { get; set; }
 
         [Required]
-        public string? RecipientId  { get; set; }
+        public string? RecipientId { get; set; }
 
         //
 
         [Required]
-         public string? Title { get; set; }
+        public string? Title { get; set; }
 
         [Required]
         public string? Message { get; set; }
 
         public DateTime Created { get; set; }
-        public int NotificationTypeId  { get; set; }
+        public int NotificationTypeId { get; set; }
         public bool HasBeenViewed { get; set; }
 
         //Navigation Properties 
@@ -35,7 +35,7 @@ namespace BugTracker.Models
         public virtual Project? Project { get; set; }
         public virtual BTUser? Sender { get; set; }
         public virtual BTUser? Recipient { get; set; }
-        
+
 
     }
 }

@@ -19,7 +19,7 @@ namespace BugTracker.Models
 
         public DateTime? Created { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime? EndDate   { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public int ProjectPriorityId { get; set; }
 
@@ -33,8 +33,8 @@ namespace BugTracker.Models
         //Navigation Properties
         public virtual Company? Company { get; set; }
         public virtual ProjectPriority? ProjectPriority { get; set; }
-        public virtual ICollection<BTUser>? Members { get; set; }
-        public virtual ICollection<Ticket>? Tickets { get; set; }
+        public virtual ICollection<BTUser>? Members { get; set; } = new HashSet<BTUser>();
+        public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
 
 
 

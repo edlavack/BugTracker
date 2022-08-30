@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
 {
-    public class BTUser
+    public class BTUser : IdentityUser
     {
         [Required]
         [Display(Name = "First Name")]
@@ -18,7 +19,7 @@ namespace BugTracker.Models
         [NotMapped]
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
 
-        public IFormFile?  ImageFormFile { get; set; }
+        public IFormFile? ImageFormFile { get; set; }
         public string? ImageFileName { get; set; }
         public string? ImageFileType { get; set; }
 
@@ -27,7 +28,7 @@ namespace BugTracker.Models
 
         //Navigation Properties 
         public virtual Company? Company { get; set; }
-        public virtual ICollection<BTUser>? Projects{ get; set; }
+        public virtual ICollection<BTUser>? Projects { get; set; } = new HashSet<BTUser>();
 
 
     }

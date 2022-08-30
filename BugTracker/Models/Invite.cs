@@ -12,10 +12,10 @@ namespace BugTracker.Models
 
         //Foreign Key(s)
         [Required]
-       public string? InvitorId { get; set; }
-       public int CompanyId { get; set; }
-       public int ProjectId { get; set; }
-       public string? InviteeId { get; set; }
+        public string? InvitorId { get; set; }
+        public int CompanyId { get; set; }
+        public int ProjectId { get; set; }
+        public string? InviteeId { get; set; }
         //
 
         [Required]
