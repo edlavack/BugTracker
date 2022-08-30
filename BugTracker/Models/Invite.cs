@@ -33,8 +33,8 @@ namespace BugTracker.Models
         //Navigation Properties 
         public virtual Company? Company { get; set; }
         public virtual Project? Project { get; set; }
-        public virtual Invite? Invitor { get; set; }
-        public virtual Invite? Invitee { get; set; }
+        public virtual BTUser? Invitor { get; set; }
+        public virtual BTUser? Invitee { get; set; }
 
 
 
