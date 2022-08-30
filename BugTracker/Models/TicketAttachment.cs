@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
 {
@@ -14,8 +15,9 @@ namespace BugTracker.Models
         [Required]
         public string? UserId { get; set; }
 
-
+        [NotMapped]
         public IFormFile? FormFile { get; set; }
+
         public byte[]? FileData { get; set; }
         public string? FileType { get; set; }
 

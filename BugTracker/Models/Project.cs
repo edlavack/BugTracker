@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
 {
@@ -23,6 +24,7 @@ namespace BugTracker.Models
 
         public int ProjectPriorityId { get; set; }
 
+        [NotMapped]
         public IFormFile? ImageFormFile { get; set; }
 
         public string? ImageFileName { get; set; }
