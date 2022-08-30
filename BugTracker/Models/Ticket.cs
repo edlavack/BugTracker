@@ -38,7 +38,7 @@ namespace BugTracker.Models
         public virtual BTUser? SubmitterUser { get; set; }
         public virtual ICollection<BTUser>? Comments { get; set; } = new HashSet<BTUser>();
         public virtual ICollection<BTUser>? Attachments { get; set; } = new HashSet<BTUser>();
-        public virtual BTUser? History { get; set; }
+        public virtual TicketHistory? History { get; set; }
 
 
 

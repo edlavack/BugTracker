@@ -13,6 +13,8 @@ namespace BugTracker.Models
 
         //Foreign Keys
         public int TicketId { get; set; }
+
+        [Required]
         public string? UserId { get; set; }
 
         //Navigation Properties

@@ -19,7 +19,9 @@ namespace BugTracker.Models
         [NotMapped]
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
 
+        [NotMapped]
         public IFormFile? ImageFormFile { get; set; }
+
         public string? ImageFileName { get; set; }
         public string? ImageFileType { get; set; }
 
@@ -28,7 +30,7 @@ namespace BugTracker.Models
 
         //Navigation Properties 
         public virtual Company? Company { get; set; }
-        public virtual ICollection<BTUser>? Projects { get; set; } = new HashSet<BTUser>();
+        public virtual ICollection<Project>? Projects { get; set; } = new HashSet<Project>();
 
 
     }
