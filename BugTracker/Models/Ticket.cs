@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.Models
 {
@@ -8,15 +9,29 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        [StringLength(50)]
+        [DisplayName("Ticket Title")]
+        public string? Title { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        [StringLength(2000)]
+        [DisplayName("Ticket Description")]
+        public string? Description { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayName("Date Created")]
         public DateTime Created { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayName("Date Updated")]
         public DateTime? Updated { get; set; }
 
+
         public bool Archived { get; set; }
+
+
+        [DisplayName("Archived By Project")]
         public bool ArchivedByProject { get; set; }
 
         //Foreign Keys
@@ -25,6 +40,7 @@ namespace BugTracker.Models
         public int TicketStatusId { get; set; }
         public int TicketPriorityId { get; set; }
         public string? DeveloperUserId { get; set; }
+
         [Required]
         public string? SubmitterUserId { get; set; }
 
@@ -36,9 +52,9 @@ namespace BugTracker.Models
         public virtual TicketStatus? TicketStatus { get; set; }
         public virtual BTUser? DeveloperUser { get; set; }
         public virtual BTUser? SubmitterUser { get; set; }
-        public virtual ICollection<BTUser>? Comments { get; set; } = new HashSet<BTUser>();
-        public virtual ICollection<BTUser>? Attachments { get; set; } = new HashSet<BTUser>();
-        public virtual TicketHistory? History { get; set; }
+        public virtual ICollection<TicketComment>? Comments { get; set; } = new HashSet<TicketComment>();
+        public virtual ICollection<TicketAttachment>? Attachments { get; set; } = new HashSet<TicketAttachment>();
+        public virtual ICollection<TicketHistory>? History { get; set; } = new HashSet<TicketHistory>();
 
 
 

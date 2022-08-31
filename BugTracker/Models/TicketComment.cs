@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.Models
 {
@@ -7,6 +8,8 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("Member Comment")]
+        [StringLength(2000)]
         public string? Comment { get; set; }
 
         public DateTime Created { get; set; }

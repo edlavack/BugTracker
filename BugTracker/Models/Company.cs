@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
@@ -9,8 +10,11 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("Company Name")]
         public string? Name { get; set; }
 
+
+        [DisplayName("Company Description")]
         public string? Description { get; set; }
 
         [NotMapped]

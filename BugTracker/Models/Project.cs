@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
@@ -8,27 +9,47 @@ namespace BugTracker.Models
         //Primary Key
         public int Id { get; set; }
 
-        //Foreign Key
+        //Foreign Keys
         public int CompanyId { get; set; }
+        public int ProjectPriorityId { get; set; }
         //
 
         [Required]
+        [DisplayName("Name")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and a max {1} characters long.", MinimumLength = 2)]
         public string? Name { get; set; }
 
         [Required]
+        [DisplayName("Description")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and a max {1} characters long.", MinimumLength = 2)]
         public string? Description { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayName("Date Created")]
         public DateTime Created { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayName("Project Start Date")]
         public DateTime StartDate { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayName("Project End Date")]
         public DateTime EndDate { get; set; }
 
-        public int ProjectPriorityId { get; set; }
+
+        
 
         [NotMapped]
+        [DataType(DataType.Upload)]
         public IFormFile? ImageFormFile { get; set; }
 
-        public string? ImageFileName { get; set; }
-        public string? ImageFileType { get; set; }
+        [DisplayName("File Name")]
+        public byte[]? ImageFile { get; set; }
+
+        [DisplayName("Project Image")]
+        public string? ImageContentType { get; set; }
 
         public bool Archived { get; set; }
 
