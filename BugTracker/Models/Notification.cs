@@ -8,8 +8,8 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         //Foreign Key(s)
-        public int ProjectId { get; set; }
-        public int TicketId { get; set; }
+        public int? ProjectId { get; set; }
+        public int? TicketId { get; set; }
 
         [Required]
         public string? SenderId { get; set; }

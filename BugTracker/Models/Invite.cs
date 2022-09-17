@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.Models
 {
@@ -6,7 +7,12 @@ namespace BugTracker.Models
     {
         //Primary Key
         public int Id { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayName("Invitation Date")]
         public DateTime InviteDate { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime? JoinDate { get; set; }
         public Guid CompanyToken { get; set; }
 
@@ -19,12 +25,15 @@ namespace BugTracker.Models
         //
 
         [Required]
+        [DisplayName("Email")]
         public string? InviteeEmail { get; set; }
 
         [Required]
+        [DisplayName("First Name")]
         public string? InviteeFirstName { get; set; }
 
         [Required]
+        [DisplayName("Last Name")]
         public string? InviteeLastName { get; set; }
 
         public string? Message { get; set; }

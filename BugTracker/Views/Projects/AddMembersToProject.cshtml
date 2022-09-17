@@ -1,0 +1,34 @@
+﻿@model BugTracker.Models.ViewModels.AddMemberViewModel
+
+
+
+@{
+    ViewData["Title"] = "Assign Project Members";
+}
+<h1>Project : @Model.Project?.Name</h1>
+<h4>Assign Project Members</h4>
+<hr />
+<div class="row card">
+    <div class="col-md-4">
+        <form method="post" asp-action="AddMembersToProject" asp-controller="Projects">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Project!.Id" />
+
+            <h2>@Model.Project?.Name </h2>
+
+            <p>@Model.Project?.Description </p>
+
+            <div class="form-group">
+                <label class="control-label">Select Project Members</label>
+                <select multiple asp-for="MemberIds" class="form-control" asp-items="@Model.MemberList">
+                    <option></option>
+                </select>
+                <span asp-validation-for="MemberIds" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Assign" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="UnassignedProjects">Back to List</a>
+</div>

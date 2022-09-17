@@ -230,7 +230,7 @@ namespace BugTracker.data.migrations
                     b.Property<int>("NotificationTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<string>("RecipientId")
@@ -241,7 +241,7 @@ namespace BugTracker.data.migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TicketId")
+                    b.Property<int?>("TicketId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -298,8 +298,8 @@ namespace BugTracker.data.migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
@@ -307,13 +307,16 @@ namespace BugTracker.data.migrations
                     b.Property<string>("ImageContentType")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("ImageFile")
+                    b.Property<byte[]>("ImageFileData")
                         .HasColumnType("bytea");
+
+                    b.Property<string>("ImageFileName")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<int>("ProjectPriorityId")
                         .HasColumnType("integer");
@@ -769,9 +772,7 @@ namespace BugTracker.data.migrations
 
                     b.HasOne("BugTracker.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("BugTracker.Models.BTUser", "Recipient")
                         .WithMany()
@@ -787,9 +788,7 @@ namespace BugTracker.data.migrations
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TicketId");
 
                     b.Navigation("NotificationType");
 

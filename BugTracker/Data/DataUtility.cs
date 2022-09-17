@@ -21,6 +21,11 @@ namespace BugTracker.Data
         private static int addressbookId;
 
 
+        public static DateTime GetPostGresDate(DateTime datetime)
+        {
+            return DateTime.SpecifyKind(datetime, DateTimeKind.Utc);
+        }
+
         public static string GetConnectionString(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -183,6 +188,35 @@ namespace BugTracker.Data
                 UserName = "ProjectManager1@bugtracker.com",
                 Email = "ProjectManager1@bugtracker.com",
                 FirstName = "John",
+                LastName = "Appuser",
+                EmailConfirmed = true,
+                CompanyId = company1Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.ProjectManager));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Default ProjectManager1 User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+
+
+            defaultUser = new BTUser
+            {
+                UserName = "BarbaraUser1@bugtracker.com",
+                Email = "BarbaraUser1@bugtracker.com",
+                FirstName = "Barbara",
                 LastName = "Appuser",
                 EmailConfirmed = true,
                 CompanyId = company1Id

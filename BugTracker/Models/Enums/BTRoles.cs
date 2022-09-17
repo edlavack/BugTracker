@@ -2,11 +2,11 @@
 {
     public enum BTRoles
     {
-        Admin,
-        ProjectManager,
-        Developer,
-        Submitter,
-        DemoUser
+        Admin = 1,
+        ProjectManager = 2,
+        Developer = 3,
+        Submitter = 4,
+        DemoUser = 5
 
     }
 }
