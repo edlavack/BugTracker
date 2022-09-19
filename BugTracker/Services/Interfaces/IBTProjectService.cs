@@ -5,7 +5,7 @@ namespace BugTracker.Services.Interfaces
     public interface IBTProjectService
     {
 
-
+        public Task<List<Project>> GetUserProjectsAsync(string userId);
         public Task<bool> AddProjectManagerAsync(string userId, int projectId);
         public Task AddProjectAsync(Project project);
         public Task<bool> AddUserToProjectAsync(BTUser user, int projectId);
@@ -21,5 +21,6 @@ namespace BugTracker.Services.Interfaces
         public Task<bool> RemoveUserFromProjectAsync(BTUser user, int projectId);
         public Task RestoreProjectAsync(int projectId);
         public Task UpdateProjectAsync(Project project);
+        public Task<List<Project>> GetAllProjectsByPriorityAsync(int companyId, string priority);
     }
 }

@@ -93,8 +93,12 @@ namespace BugTracker.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddTicketComment([Bind("Id, TicketId, Comment")] TicketComment ticketComment, int ticketId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTicketComment([Bind("Id, UserId, TicketId, Comment")] TicketComment ticketComment, int ticketId, string? commentBody)
         {
+
+            ModelState.Remove("UserId");
+            ModelState.Remove("Comment");
 
             
 
@@ -107,6 +111,7 @@ namespace BugTracker.Controllers
 
                     ticketComment.UserId = _userManager.GetUserId(User);
                     ticketComment.Created = DataUtility.GetPostGresDate(DateTime.UtcNow);
+                    ticketComment.Comment = commentBody;
 
                     await _ticketService.AddTicketCommentAsync(ticketComment, ticketId);
 
@@ -228,6 +233,9 @@ namespace BugTracker.Controllers
                 .Include(t => t.TicketPriority)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.TicketType)
+                .Include(t=>t.Comments)
+                    .ThenInclude(t=>t.User)
+                .Include(t=>t.History)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {

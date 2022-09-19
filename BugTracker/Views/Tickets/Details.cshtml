@@ -65,8 +65,10 @@
                             <div class="card-body" style="overflow-y:auto;height:600px;">
 
                                 @*Form and Logic for authorized users to add comments*@
+
                                 <form asp-action="AddTicketComment" method="post">
                                     <textarea name="CommentBody" rows="7"></textarea>
+                                    <input type="hidden" name="TicketId" value="@Model.Id" />
                                     <button value="submit" class="btn btn-outline-primary btn-sm" type="submit">Submit</button>
                                 </form>
                                 <hr />
@@ -76,9 +78,9 @@
 
                                     @foreach (TicketComment comment in Model!.Comments!)
                                     {
-                                        <p>
-                                            @comment.Comment
-                                        </p>
+
+                                        <li>@comment.Created.ToString("MMM dd, yyyy")</li>
+                                        <li>@comment.Comment</li>
                                     }
                                 </ul>
                             </div>
@@ -118,6 +120,31 @@
                             </div>
                             <div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
                                 @*Loop to show the history entries for the Ticket*@
+
+                                @{
+                                    if (Model.History == null)
+                                    {
+                                        <p>No History for this ticket.</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (TicketHistory history in Model.History)
+                                        {
+                                            <div class="border border-danger">
+                                                <p>@history.Created</p>
+                                                <p>@history.User!.FullName</p>
+
+                                                <p>@history.PropertyName</p>
+                                                <p>@history.OldValue</p>
+                                                <p>@history.NewValue</p>
+                                            </div>
+                                        }
+
+                                    }
+
+
+                                }
+
                             </div>
                         </div>
                     </div>

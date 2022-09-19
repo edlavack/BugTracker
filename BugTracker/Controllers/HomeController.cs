@@ -1,4 +1,8 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.ChartModels;
+using BugTracker.Extensions;
+using BugTracker.Models;
+using BugTracker.Models.Enums;
+using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +11,12 @@ namespace BugTracker.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IBTProjectService _projectService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBTProjectService projectService)
         {
             _logger = logger;
+            _projectService = projectService;
         }
 
         public IActionResult Index()
@@ -28,5 +34,128 @@ namespace BugTracker.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
+        [HttpPost]
+        public async Task<JsonResult> PlotlyBarChart()
+        {
+            PlotlyBarData plotlyData = new();
+            List<PlotlyBar> barData = new();
+
+            int companyId = User.Identity!.GetCompanyId();
+
+            List<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(companyId);
+
+            //Bar One
+            PlotlyBar barOne = new()
+            {
+                X = projects.Select(p => p.Name).ToArray(),
+                Y = projects.SelectMany(p => p.Tickets).GroupBy(t => t.ProjectId).Select(g => g.Count()).ToArray(),
+                Name = "Tickets",
+                Type = "bar"
+            };
+
+            //Bar Two
+            PlotlyBar barTwo = new()
+            {
+                X = projects.Select(p => p.Name).ToArray(),
+                Y = projects.Select(async p => (await _projectService.GetProjectMembersByRoleAsync(p.Id, nameof(BTRoles.Developer))).Count).Select(c => c.Result).ToArray(),
+                Name = "Developers",
+                Type = "bar"
+            };
+
+            barData.Add(barOne);
+            barData.Add(barTwo);
+
+            plotlyData.Data = barData;
+
+            return Json(plotlyData);
+        }
+
+        private string nameof(object developer)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+        [HttpPost]
+        public async Task<JsonResult> GglProjectTickets()
+        {
+            int companyId = User.Identity!.GetCompanyId();
+
+            List<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(companyId);
+
+            List<object> chartData = new();
+            chartData.Add(new object[] { "ProjectName", "TicketCount" });
+
+            foreach (Project prj in projects)
+            {
+                chartData.Add(new object[] { prj.Name, prj.Tickets.Count() });
+            }
+
+            return Json(chartData);
+        }
+
+
+
+
+
+        [HttpPost]
+        public async Task<JsonResult> GglProjectPriority()
+        {
+            int companyId = User.Identity!.GetCompanyId();
+
+            List<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(companyId);
+
+            List<object> chartData = new();
+            chartData.Add(new object[] { "Priority", "Count" });
+
+
+            foreach (string priority in Enum.GetNames(typeof(BTProjectPriorities)))
+            {
+                int priorityCount = (await _projectService.GetAllProjectsByPriorityAsync(companyId, priority)).Count();
+                chartData.Add(new object[] { priority, priorityCount });
+            }
+
+            return Json(chartData);
+        }
+
+
+
+        [HttpPost]
+        public async Task<JsonResult> AmCharts()
+        {
+
+            AmChartData amChartData = new();
+            List<AmItem> amItems = new();
+
+            int companyId = User.Identity!.GetCompanyId();
+
+            List<Project> projects = (await _projectService.GetAllProjectsByCompanyIdAsync(companyId)).Where(p => p.Archived == false).ToList();
+
+            foreach (Project project in projects)
+            {
+                AmItem item = new();
+
+                item.Project = project.Name;
+                item.Tickets = project.Tickets.Count;
+                item.Developers = (await _projectService.GetProjectMembersByRoleAsync(project.Id, nameof(BTRoles.Developer))).Count();
+
+                amItems.Add(item);
+            }
+
+            amChartData.Data = amItems.ToArray();
+
+
+            return Json(amChartData.Data);
+        }
+
+
+
+
     }
 }
