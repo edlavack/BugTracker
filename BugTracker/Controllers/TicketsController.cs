@@ -62,6 +62,13 @@ namespace BugTracker.Controllers
 
 
 
+
+
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddTicketAttachment([Bind("Id,FormFile,Description,TicketId")] TicketAttachment ticketAttachment)
@@ -100,7 +107,7 @@ namespace BugTracker.Controllers
             ModelState.Remove("UserId");
             ModelState.Remove("Comment");
 
-            
+
 
             if (ModelState.IsValid)
             {
@@ -128,6 +135,10 @@ namespace BugTracker.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+
+
+     
+
 
 
         #region GET for Assign Developer
@@ -233,9 +244,9 @@ namespace BugTracker.Controllers
                 .Include(t => t.TicketPriority)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.TicketType)
-                .Include(t=>t.Comments)
-                    .ThenInclude(t=>t.User)
-                .Include(t=>t.History)
+                .Include(t => t.Comments)
+                    .ThenInclude(t => t.User)
+                .Include(t => t.History)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {

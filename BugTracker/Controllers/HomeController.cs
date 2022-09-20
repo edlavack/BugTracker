@@ -2,6 +2,7 @@
 using BugTracker.Extensions;
 using BugTracker.Models;
 using BugTracker.Models.Enums;
+using BugTracker.Models.ViewModels;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -12,11 +13,17 @@ namespace BugTracker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBTProjectService _projectService;
+        private readonly IBTCompanyService _companyService;
+        private readonly IBTTicketService _ticketService;
 
-        public HomeController(ILogger<HomeController> logger, IBTProjectService projectService)
+        public HomeController(ILogger<HomeController> logger, IBTProjectService projectService, 
+                                                                IBTCompanyService companyService,
+                                                                IBTTicketService ticketService)
         {
             _logger = logger;
             _projectService = projectService;
+            _companyService = companyService;
+            _ticketService = ticketService;
         }
 
         public IActionResult Index()
@@ -35,7 +42,26 @@ namespace BugTracker.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public async Task<IActionResult> Dashboard()
+        {
+            DashboardViewModel model = new();
 
+            int companyId = User.Identity!.GetCompanyId();
+
+            Company? company = await _companyService.GetCompanyInfoAsync(companyId);
+            List<Project> projects = await _projectService.GetAllProjectsByCompanyIdAsync(companyId);
+            List<Ticket> tickets = await _ticketService.GetAllTicketsByCompanyIdAsync(companyId);
+            List<BTUser> members = await _companyService.GetCompanyMembersAsync(companyId);
+
+
+            model.Company = company;
+            model.Projects = projects;
+            model.Tickets = tickets;
+            model.Members = members;
+
+
+            return View(model);
+        }
 
         [HttpPost]
         public async Task<JsonResult> PlotlyBarChart()
@@ -50,8 +76,8 @@ namespace BugTracker.Controllers
             //Bar One
             PlotlyBar barOne = new()
             {
-                X = projects.Select(p => p.Name).ToArray(),
-                Y = projects.SelectMany(p => p.Tickets).GroupBy(t => t.ProjectId).Select(g => g.Count()).ToArray(),
+                X = projects.Select(p => p.Name!).ToArray(),
+                Y = projects.SelectMany(p => p.Tickets!).GroupBy(t => t.ProjectId).Select(g => g.Count()).ToArray(),
                 Name = "Tickets",
                 Type = "bar"
             };
@@ -59,7 +85,7 @@ namespace BugTracker.Controllers
             //Bar Two
             PlotlyBar barTwo = new()
             {
-                X = projects.Select(p => p.Name).ToArray(),
+                X = projects.Select(p => p.Name!).ToArray(),
                 Y = projects.Select(async p => (await _projectService.GetProjectMembersByRoleAsync(p.Id, nameof(BTRoles.Developer))).Count).Select(c => c.Result).ToArray(),
                 Name = "Developers",
                 Type = "bar"
@@ -94,7 +120,7 @@ namespace BugTracker.Controllers
 
             foreach (Project prj in projects)
             {
-                chartData.Add(new object[] { prj.Name, prj.Tickets.Count() });
+                chartData.Add(new object[] { prj.Name!, prj.Tickets!.Count() });
             }
 
             return Json(chartData);
@@ -141,8 +167,8 @@ namespace BugTracker.Controllers
             {
                 AmItem item = new();
 
-                item.Project = project.Name;
-                item.Tickets = project.Tickets.Count;
+                item.Project = project.Name!;
+                item.Tickets = project.Tickets!.Count;
                 item.Developers = (await _projectService.GetProjectMembersByRoleAsync(project.Id, nameof(BTRoles.Developer))).Count();
 
                 amItems.Add(item);

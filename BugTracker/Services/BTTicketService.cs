@@ -22,6 +22,7 @@ namespace BugTracker.Services
         }
 
 
+
         public async Task<List<Ticket>> GetTicketsByUserIdAsync(string userId, int companyId)
         {
             BTUser? btUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
@@ -58,7 +59,6 @@ namespace BugTracker.Services
                 throw;
             }
         }
-
 
 
 

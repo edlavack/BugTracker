@@ -1,5 +1,6 @@
 ﻿@model BugTracker.Models.Project
 
+@using BugTracker.Models
 @using BugTracker.Models.Enums
 @using BugTracker.Services.Interfaces
 
@@ -21,17 +22,26 @@
                     <div class="card col m-1 p-2">
                         <div class="body">
                             @* Project Name *@
-                            <h5>[Project Name]</h5>
+                            <h5>@Model.Name</h5>
                             @* Project Description *@
-                            <p>[Project description]</p>
+                            <p>@Model.Description</p>
+
+
+
+
                             <div class="progress-container progress-info m-b-25">
                                 <span class="progress-badge" style="font-size:small">Project Status</span>
                                 <div class="progress">
                                     @* Razor code block *@
-                                    [Progress Bar code]
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" @*style="width:@percent%;*@">
+                                    @{
+                                        var start = Model.StartDate;
+                                        var end = Model.EndDate;
+                                        var today = DateTime.Now;
+                                        var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
+                                    }
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;">
                                         @* Use Progress Bar code variable here *@
-                                        <span class="progress-value">100%</span>
+                                        <span class="progress-value">@percent%</span>
                                     </div>
                                 </div>
                             </div>
@@ -40,18 +50,18 @@
                     <div class="card col m-1 p-2">
                         <div class="body">
                             <ul class=" list-unstyled basic-list">
-                                <li>Start Date: <span class="">@Model.StartDate.ToString("MM.dd.yyyy")</span></li>
-                                <li>Deadline: <span class="">@Model.EndDate.ToString("MM.dd.yyyy")</span></li>
+                                <li>Start Date: <span class="">@Model.StartDate.ToString("dddd, MMM dd yyyy")</span></li>
+                                <li>Deadline: <span class="">@Model.EndDate.ToString("dddd, MMM dd yyyy")</span></li>
                                 <li>Priority: <span class="">@Model.ProjectPriority!.Name</span></li>
                                 @* if() logic *@
-                                @*@if (today < end && today >= start)
+                                @if (Model.EndDate < DateTime.Today)
                                 {
-                                    <li>Status: <span class="">Active</span></li>
+                                    <li>Status: <span class="">Inactive</span></li>
                                 }
                                 else
                                 {
-                                    <li>Status: <span class="">Inactive</span></li>
-                                }*@
+                                    <li>Status: <span class="">Active</span></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -84,6 +94,7 @@
 
                                 [Project Members]
                                 @* Logic for avatars *@
+
                             </ul>
 
                         </div>
@@ -117,7 +128,7 @@
                                     <thead class="">
                                         <tr>
                                             @* Table header *@
-                                            [Ticket Table header]
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,7 +150,7 @@
 
 @{
     BTUser projectPM = await _projectService.GetProjectManagerAsync(Model.Id)!;
-    if(projectPM != null)
+    if (projectPM != null)
     {
         <td>@projectPM.FullName</td>
     }
@@ -148,7 +159,7 @@
 @foreach (Ticket ticket in Model.Tickets!)
 {
     <p>
-    @ticket.Title
+        @ticket.Title
     </p>
 }
 
